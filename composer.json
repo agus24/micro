@@ -1,12 +1,20 @@
 {
     "name": "agus24/micro",
+    "type" : "library",
     "description": "Micro Core",
     "keywords": ["micro"],
     "license": "MIT",
     "type": "project",
     "require" : {
-        "php": ">=5.3.0"
+        "php": ">=5.4.0"
     },
+    "authors": [
+        {
+            "name": "Gustiawan Ouwawi",
+            "email": "agusx244@gmail.com",
+            "role": "Full Stack Web Developer"
+        }
+    ],
     "autoload": {
         "classmap": [
             "database"
