@@ -1,0 +1,15 @@
+{
+    "name": "agus24/micro",
+    "description": "Micro Core",
+    "keywords": ["micro"],
+    "license": "MIT",
+    "type": "project",
+    "autoload": {
+        "classmap": [
+            "database"
+        ],
+        "psr-4": {
+            "Micro\\" : "Core/",
+        }
+    }
+}
