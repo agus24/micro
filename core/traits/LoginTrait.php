@@ -2,6 +2,9 @@
 
 namespace Core\Traits;
 
+use Core\App;
+use Core\Session;
+
 trait LoginTrait
 {
     public function checkLogin($username,$password)
@@ -13,30 +16,23 @@ trait LoginTrait
             if(password_verify($password,$user->password))
             {
                 auth()->login($user);
-                return redirect($this->redirectAfterLogin());
+                return redirect(App::config('auth')['redirect']['afterLogin']);
             }
         }
+        Session::flash('error',[
+            "__all" => ["Username Or Password is wrong."],
+        ]);
         return back();
     }
 
     public function logout()
     {
         auth()->logout();
-        return redirect($this->redirectAfterLogout());
+        return redirect(App::config('auth')['redirect']['afterLogout']);
     }
 
     private function username()
     {
         return "username";
-    }
-
-    private function redirectAfterLogin()
-    {
-        return "user";
-    }
-
-    private function redirectAfterLogout()
-    {
-        return "";
     }
 }

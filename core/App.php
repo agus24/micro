@@ -1,20 +1,28 @@
 <?php
+/**
+ * App - Box untuk menyimpan applikasi yang ada.
+ *
+ * @author Gustiawan Ouwawi - agusx244@gmail.com
+ * @version 1.0
+ */
 
 namespace Core;
 
 use Core\Auth;
+use Core\Contract\Provider;
+use Core\Route;
 use Core\Session;
-use System\Route;
 
 class App
 {
     /**
+     * variabel box yang akan diisi.
      * @var array
      */
     protected static $registry = [];
 
     /**
-     * masukin key sama value ke registry
+     * untuk mengisi variabel registry
      * @param  string $key
      * @param  any $value
      */
@@ -24,7 +32,7 @@ class App
     }
 
     /**
-     * ambil data dari registry sesuai key
+     * untuk mengambil data dari registry
      * @param  string $key
      * @return any
      */
@@ -39,7 +47,7 @@ class App
     }
 
     /**
-     * ambil databasenya
+     * Untuk mengambil registry database
      * @return QueryBuilder
      */
     public static function database()
@@ -50,15 +58,45 @@ class App
     }
 
     /**
-     * session, route, request, auth di declare di sini
+     * Untuk mengambil registry config
+     * @param  string $key
+     * @return any
+     */
+    public static function config($key)
+    {
+        return static::$registry['config'][$key];
+    }
+
+    /**
+     * untuk menjalankan aplikasi
      */
     public static function run()
     {
         Session::map($_SESSION);
         static::bind('auth', new Auth(Session::get('user')));
-
-        $route = Route::instance(request());
+        Session::sessionCheck();
+        Route::init();
         require "app/routes.php";
-        $route->end();
+        Route::run();
+    }
+
+    /**
+     * Untuk Menjalankan Provider
+     * @param  Provider $provider
+     */
+    public static function provider(Provider $provider)
+    {
+        $provider->boot();
+    }
+
+    /**
+     * Untuk mengambil registry view
+     * @return View
+     */
+    public static function view()
+    {
+        return static::$registry['view'];
+
+        throw new Exception("View Not Configured");
     }
 }
