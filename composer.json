@@ -19,6 +19,10 @@
         "classmap": [
             "database"
         ],
+        "files": [
+            "core/helper/helper.php",
+            "core/handler/Error.php"
+        ],
         "psr-4": {
             "Micro\\" : "Core/"
         }
